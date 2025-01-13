@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController characterController;
     private Camera originalCamera; // Oyuncunun kamerasý
-    public Camera vehicleCamera;  // Araç kamerasý
+    private Camera vehicleCamera;  // Araç kamerasý
     private RCC_CarControllerV3 carController; // Araç kontrolü
 
     void Start()
@@ -25,8 +25,9 @@ public class PlayerController : MonoBehaviour
             cameraTransform = Camera.main.transform;
 
         originalCamera = cameraTransform.GetComponent<Camera>();
-        DisableVehicleControl();
-        vehicleCamera.enabled = false;
+        vehicleCamera = null; // Araç kamerasý baþlangýçta null olacak
+        //DisableVehicleControl();
+        originalCamera.enabled = true; // Baþlangýçta oyuncu kamerasý aktif
     }
 
     void Update()
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // Araçta hareket etmek ve kamerayý kontrol etmek
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 ExitVehicle();
             }
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckForVehicleInteraction()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, vehicleLayer))
@@ -111,10 +112,18 @@ public class PlayerController : MonoBehaviour
         characterController.transform.localPosition = Vector3.zero; // Aracýn içinde doðru pozisyonda olsun
         characterController.transform.localRotation = Quaternion.identity; // Aracýn rotasýyla hizalanacak
 
-        if (vehicleCamera != null)
+        // Araçtaki kamerayý bul
+        Camera vehicleCam = currentVehicle.GetComponentInChildren<Camera>(); // Araçtaki kamera, çocuklarda aranýr
+
+        if (vehicleCam != null)
         {
-            vehicleCamera.enabled = true;
+            vehicleCamera = vehicleCam; // Dinamik olarak aracýn kamerasýna eþitleniyor
+            vehicleCamera.enabled = true; // Araç kamerasýný etkinleþtir
             originalCamera.enabled = false; // Oyuncu kamerasýný devre dýþý býrak
+        }
+        else
+        {
+            Debug.LogError("Araçta kamera bulunamadý!");
         }
     }
 
@@ -141,7 +150,7 @@ public class PlayerController : MonoBehaviour
         // Kamera geçiþi: Oyuncu kamerasýný tekrar etkinleþtir, araç kamerasýný devre dýþý býrak
         if (vehicleCamera != null)
         {
-            vehicleCamera.enabled = false;
+            vehicleCamera.enabled = false; // Araç kamerasýný devre dýþý býrak
         }
 
         originalCamera.enabled = true; // Oyuncu kamerasýný tekrar etkinleþtir

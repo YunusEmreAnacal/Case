@@ -5,6 +5,8 @@ using UnityEngine.UI; // UI sýnýflarý için gerekli
 
 public class CarDealer : MonoBehaviour
 {
+    public PlayerCarInventory playerCarInventory;
+
     public Car[] cars;             // ScriptableObject dizisi
     public Transform carDisplay;   // Arabalarýn gösterileceði boþluk (Transform tipi)
     public Transform carSellingTransform;
@@ -55,6 +57,12 @@ public class CarDealer : MonoBehaviour
         if (isInDealerRange && Input.GetKeyDown(KeyCode.E))
         {
             EnterCarDealerUI();
+        }
+
+        // 1 tuþuna basýldýðýnda envanteri göster
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            playerCarInventory.UpdateInventoryUI();
         }
     }
 
@@ -144,6 +152,11 @@ public class CarDealer : MonoBehaviour
     public void BuyCar()
     {
         Debug.Log($"Satýn alýndý: {currentCar.carName}, Fiyat: {currentCar.price} TL, Kondisyon: {currentCar.condition}%");
+
+        if (playerCarInventory != null)
+        {
+            playerCarInventory.AddCar(currentCar);
+        }
 
         // Araba satýn alýndýktan sonra, 'sellingCar' modelini spawn et
         if (currentCar.sellingCar != null)

@@ -12,11 +12,14 @@ public class PlayerController : MonoBehaviour
     public LayerMask vehicleLayer;
     private GameObject currentVehicle;
     private bool isDriving = false;
+    public GameObject inventoryUI;
 
     private CharacterController characterController;
     private Camera originalCamera; // Oyuncunun kamerasý
     private Camera vehicleCamera;  // Araç kamerasý
     private RCC_CarControllerV3 carController; // Araç kontrolü
+
+    public PlayerCarInventory playerCarInventory;
 
     void Start()
     {
@@ -46,6 +49,19 @@ public class PlayerController : MonoBehaviour
                 ExitVehicle();
             }
         }
+        // 1 tuþuna basýldýðýnda envanteri göster
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            inventoryUI.gameObject.SetActive(true);
+            playerCarInventory.UpdateInventoryUI();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            inventoryUI.gameObject.SetActive(false);
+            playerCarInventory.UpdateInventoryUI();
+        }
+
     }
 
     void PlayerMovement()

@@ -18,3 +18,4 @@ MonoBehaviour:
   topSpeed: 200
   condition: 100
   carModel: {fileID: 100002, guid: 55ad9e52dcdf4e14ab18b5144308bfa0, type: 3}
+  sellingCar: {fileID: 4590628457881614448, guid: c0ea092979708e9459242dd1465e87f5, type: 3}

@@ -18,3 +18,4 @@ MonoBehaviour:
   topSpeed: 50
   condition: 85
   carModel: {fileID: 100198, guid: d514b359ae6b474458213a56103fa9fe, type: 3}
+  sellingCar: {fileID: 8717205092877498031, guid: 7c6911ff01e33a64fa8bea936928bbe0, type: 3}

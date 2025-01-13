@@ -816,7 +816,24 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: BCG_RCC;DOTWEEN
+    EmbeddedLinux: BCG_RCC;DOTWEEN
+    GameCoreScarlett: BCG_RCC;DOTWEEN
+    GameCoreXboxOne: BCG_RCC;DOTWEEN
+    LinuxHeadlessSimulation: BCG_RCC;DOTWEEN
+    Nintendo Switch: BCG_RCC;DOTWEEN
+    PS4: BCG_RCC;DOTWEEN
+    PS5: BCG_RCC;DOTWEEN
+    QNX: BCG_RCC;DOTWEEN
+    ReservedCFE: BCG_RCC;DOTWEEN
+    Standalone: BCG_RCC;DOTWEEN
+    VisionOS: BCG_RCC;DOTWEEN
+    WebGL: BCG_RCC;DOTWEEN
+    Windows Store Apps: BCG_RCC;DOTWEEN
+    XboxOne: BCG_RCC;DOTWEEN
+    iPhone: BCG_RCC;DOTWEEN
+    tvOS: BCG_RCC;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

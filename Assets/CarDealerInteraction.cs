@@ -1,53 +1,53 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
-using UnityEngine.UI; // UI sýnýflarý için gerekli
+using UnityEngine.UI;
 
 public class CarDealer : MonoBehaviour
 {
     public PlayerCarInventory playerCarInventory;
 
-    public Car[] cars;             // ScriptableObject dizisi
-    public Transform carDisplay;   // Arabalarýn gösterileceði boþluk (Transform tipi)
+    public Car[] cars;             
+    public Transform carDisplay;   
     public Transform carSellingTransform;
-    public int currentCarIndex = 0; // Þu an gösterilen araba
+    public int currentCarIndex = 0; 
 
-    // Canvas UI elemanlarý
-    public Text carNameText;       // Araba ismi yazan Text
-    public Text carModelText;      // Araba modeli yazan Text
-    public Text carPriceText;      // Araba fiyatý yazan Text
-    public Text carConditionText;  // Araba kondisyonu yazan Text
+    
+    public Text carNameText;   
+    public Text carModelText;   
+    public Text carPriceText;      
+    public Text carConditionText;  
 
-    // Diðer UI elemanlarý
-    public Button buyButton;       // Satýn al butonu
-    public Button nextButton;      // Sonraki araba butonu
-    public Button prevButton;      // Önceki araba butonu
 
-    // Karakter kontrol ve kamera ayarlarý
-    public GameObject player;      // Oyuncu objesi
-    public Camera mainCamera;      // Ana kamera
-    public Camera dealerCamera;    // Dealer kamera (farklý kamera)
+    public Button buyButton;       
+    public Button nextButton;      
+    public Button prevButton;      
 
-    private PlayerController playerController;  // Oyuncunun kontrol script'i
-    private Car currentCar;  // Þu an seçili olan araba
-    private GameObject currentCarModel;  // Þu an gösterilen araba modelinin referansý
+   
+    public GameObject player;     
+    public Camera mainCamera;    
+    public Camera dealerCamera;    
 
-    // UI etkileþim kontrolü
-    public GameObject carDealerUI; // Dealer UI'sini temsil eden obje
+    private PlayerController playerController;  
+    private Car currentCar;  
+    private GameObject currentCarModel;  
+
+  
+    public GameObject carDealerUI; 
 
     private bool isInDealerRange = false; // Dealer alanýna girildi mi?
 
     private void Start()
     {
-        // Butonlara týklama iþlevi atayýn
+        
         nextButton.onClick.AddListener(ShowNextCar);
         prevButton.onClick.AddListener(ShowPrevCar);
         buyButton.onClick.AddListener(BuyCar);
 
-        // Oyuncunun kontrol script'ini al
+        
         playerController = player.GetComponent<PlayerController>();
 
-        // Baþlangýçta UI'yi gizle
+        
         carDealerUI.SetActive(false);
     }
 
@@ -88,8 +88,8 @@ public class CarDealer : MonoBehaviour
     private void EnterCarDealerUI()
     {
         // Kamera deðiþikliði
-        mainCamera.gameObject.SetActive(false);   // Ana kamerayý devre dýþý býrak
-        dealerCamera.gameObject.SetActive(true);  // Dealer kamerasýný aktif et
+        mainCamera.gameObject.SetActive(false);   
+        dealerCamera.gameObject.SetActive(true); 
 
         // Karakter kontrolünü devre dýþý býrak
         playerController.enabled = false;
@@ -120,9 +120,9 @@ public class CarDealer : MonoBehaviour
 
         // Yeni araba modelini göster (3D model)
         currentCarModel = Instantiate(currentCar.carModel, carDisplay.position, Quaternion.identity);
-        //currentCarModel.transform.SetParent(carDisplay, false); // Transform'a ekle
+        
 
-        // Araba içeri binmeye çalýþýlmasýn diye sürüþ iþlevini devre dýþý býrak
+        
         if (currentCarModel.GetComponent<RCC_CarControllerV3>() != null)
         {
             currentCarModel.GetComponent<RCC_CarControllerV3>().enabled = false;
@@ -147,8 +147,7 @@ public class CarDealer : MonoBehaviour
         UpdateCarUI();
     }
 
-    // Araba satýn alma iþlemi
-    // Araba satýn alma iþlemi
+
     public void BuyCar()
     {
         Debug.Log($"Satýn alýndý: {currentCar.carName}, Fiyat: {currentCar.price} TL, Kondisyon: {currentCar.condition}%");
@@ -195,14 +194,14 @@ public class CarDealer : MonoBehaviour
     // Satýn almayý tamamladýktan sonra UI'yi kapatma ve kamerayý eski haline getirme
     public void CloseCarDealerUI()
     {
-        // UI'yi kapat
+
         carDealerUI.SetActive(false);
 
-        // Kamerayý eski haline getirme
+  
         dealerCamera.gameObject.SetActive(false);
         mainCamera.gameObject.SetActive(true);
 
-        // Karakter kontrolünü tekrar aç
+     
         playerController.enabled = true;
     }
 }
